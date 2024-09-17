@@ -1,0 +1,73 @@
+package com.etiya.academy.controller;
+
+import com.etiya.academy.entity.Product;
+import com.etiya.academy.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+// ProductController'daki 5 temel operasyonu kodlamak
+// getall -> 200
+// getbyid -> eğer id ile bir veriye rastlanmaz ise, status code 404 olsun.
+// update-delete -> 200
+// add -> eğer başarılı ise status code 201 dönsün.
+
+@RestController
+@RequestMapping("/api/v1/products")
+@RequiredArgsConstructor // -> final olarak işaretlenen tüm arg. içeren ctor.
+public class ProductsController
+{
+    private final ProductService productService;
+    //5 temel operasyon (CRUD)
+
+    @GetMapping()
+    public ResponseEntity<List<Product>> getAll() {
+
+        return ResponseEntity.ok(productService.getAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> add(@RequestBody Product product)
+    {
+        Product product1= productService.add(product);
+        if (product1!=null)
+            return ResponseEntity.status(201).build();
+        return ResponseEntity.status(404).build();
+
+    }
+
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getById(@PathVariable int id){
+
+        Product product=productService.getById(id);
+        if (product!=null)
+            return ResponseEntity.ok(product);
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
+        productService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> update(@RequestBody Product product, @PathVariable int id){
+
+        Product product1=productService.update(product,id);
+
+        return ResponseEntity.status(200).body(product1);
+    }
+
+
+
+
+
+
+
+
+
+}
