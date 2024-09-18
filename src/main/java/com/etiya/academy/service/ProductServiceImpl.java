@@ -23,9 +23,7 @@ public class ProductServiceImpl implements ProductService
         // Veri Erişim -> DB'e git verileri oku "Select * from Products"
         // bla bla..
         return productRepository.getAll().stream()
-                .map(product -> {
-                    return new ListProductDto(product.getId(), product.getName(), product.getUnitPrice());
-                }).toList();
+                .map(ProductMapper.INSTANCE::listDtoFromProduct).toList();
     }
     // Validasyon -> Direkt verinin üzerinde farklı veri gerektirmeden yapılabilen kontrollerdir.
     // İş Kuralı -> genelde diğer verilerle karşılaştırma üzerine bir yapıdır. -> Aynı isimde bir ürün var mı?
