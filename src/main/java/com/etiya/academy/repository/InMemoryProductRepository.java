@@ -10,7 +10,7 @@ import java.util.List;
 public class InMemoryProductRepository implements ProductRepository
 {
     List<Product> products = new ArrayList<>();
-
+    int id=0;
     @Override
     public List<Product> getAll() {
         return products;
@@ -18,8 +18,9 @@ public class InMemoryProductRepository implements ProductRepository
 
     @Override
     public Product add(Product product) {
+        id++;
+        product.setId(id);
         products.add(product);
-
         return product;
     }
 

@@ -1,5 +1,9 @@
 package com.etiya.academy.controller;
 
+import com.etiya.academy.dto.product.CreateProductDto;
+import com.etiya.academy.dto.product.ListProductDto;
+import com.etiya.academy.dto.product.ProductDto;
+import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Product;
 import com.etiya.academy.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +26,13 @@ public class ProductsController
     //5 temel operasyon (CRUD)
 
     @GetMapping()
-    public ResponseEntity<List<Product>> getAll() {
+    public ResponseEntity<List<ListProductDto>> getAll() {
 
         return ResponseEntity.ok(productService.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody Product product)
+    public ResponseEntity<Void> add(@RequestBody CreateProductDto product)
     {
         Product product1= productService.add(product);
         if (product1!=null)
@@ -40,9 +44,9 @@ public class ProductsController
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable int id){
+    public ResponseEntity<ProductDto> getById(@PathVariable int id){
 
-        Product product=productService.getById(id);
+        ProductDto product=productService.getById(id);
         if (product!=null)
             return ResponseEntity.ok(product);
         return ResponseEntity.notFound().build();
@@ -55,9 +59,9 @@ public class ProductsController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@RequestBody Product product, @PathVariable int id){
+    public ResponseEntity<ProductDto> update(@RequestBody UpdateProductDto dto, @PathVariable int id){
 
-        Product product1=productService.update(product,id);
+        ProductDto product1=productService.update(dto,id);
 
         return ResponseEntity.status(200).body(product1);
     }
