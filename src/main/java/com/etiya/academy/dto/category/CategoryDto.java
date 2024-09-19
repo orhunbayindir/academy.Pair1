@@ -1,6 +1,5 @@
-package com.etiya.academy.dto.product;
+package com.etiya.academy.dto.category;
 
-import com.etiya.academy.dto.category.CategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto
-{
+public class CategoryDto {
+
     private int id;
     private String name;
-    private double unitPrice;
-    private int unitsInStock;
-    private CategoryDto category;
 }

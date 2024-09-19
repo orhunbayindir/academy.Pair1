@@ -1,21 +1,21 @@
 package com.etiya.academy.repository;
 
 import com.etiya.academy.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ProductRepository
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long>
 {
-    List<Product> getAll();
-    Product add(Product product);
-
-    //delete update getbyıd
-
-    void delete(int id);
-
-    Product update(Product product,int id);
-
-    Product getById(int id);
-
+    List<Product> findAll();
+//    Product save(Product product);
+//
+//    //delete update getbyıd
+//
+    void deleteById(Long id);
+//
+//    Product getById(int id);
 
 }

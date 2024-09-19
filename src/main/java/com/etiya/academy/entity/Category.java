@@ -7,23 +7,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// Boilerplate -> Basmakalıp
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
-public class Product
-{
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
-    private double unitPrice;
-    private int unitsInStock;
 
-    @ManyToOne
-    private Category category;
+    @OneToMany( cascade = CascadeType.ALL , mappedBy = "category")
+    private List<Product> productList;
 }
