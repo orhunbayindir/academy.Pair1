@@ -24,5 +24,4 @@ public interface ProductMapper
     @Mapping(source="category", target = "category.id")
     Product productFromUpdateDto(UpdateProductDto dto);
 
-
 }
