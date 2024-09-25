@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>
 //
 //    //delete update getbyıd
 //
-    void deleteById(Long id);
+    void deleteById(Integer id);
 //
 //    Product getById(int id);
 
