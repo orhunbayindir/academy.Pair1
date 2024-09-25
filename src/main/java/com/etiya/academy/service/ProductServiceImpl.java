@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService
         return productRepository.findAll().stream()
                 .map(ProductMapper.INSTANCE::listDtoFromProduct).toList();
     }
+
     // Validasyon -> Direkt verinin üzerinde farklı veri gerektirmeden yapılabilen kontrollerdir.
     // İş Kuralı -> genelde diğer verilerle karşılaştırma üzerine bir yapıdır. -> Aynı isimde bir ürün var mı?
     // halit@kodlama.io
@@ -37,8 +38,6 @@ public class ProductServiceImpl implements ProductService
     // Aynı e posta ile bir üye bulunmamalıdır. - 2 İş Kuralı
     @Override
     public Product add(CreateProductDto product) {
-
-
         if(product.getName().length() < 3)
             throw new BusinessException("Ürün ismi 3 haneden kısa olamaz.");
 
@@ -57,12 +56,12 @@ public class ProductServiceImpl implements ProductService
             throw new BusinessException("Kategori seçilmelidir.");
         Product product1 = ProductMapper.INSTANCE.productFromCreateDto(product);
         product1.setCategory(category.get());
-       return productRepository.save(product1);
 
+        return productRepository.save(product1);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         productRepository.deleteById(id);
     }
 
@@ -82,7 +81,7 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public ProductDto getById(Long id) {
+    public ProductDto getById(Integer id) {
         return ProductMapper.INSTANCE.dtoFromProduct(productRepository.getById(id));
     }
 }

@@ -14,10 +14,10 @@ public interface ProductService
     List<ListProductDto> getAll();
     Product add(CreateProductDto product);
 
-    void delete(Long id);
+    void delete(Integer id);
 
     ProductDto update(UpdateProductDto dto);
 
-    ProductDto getById(Long id);
+    ProductDto getById(Integer id);
 
 }

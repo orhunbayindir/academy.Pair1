@@ -44,7 +44,7 @@ public class ProductsController
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getById(@PathVariable Long id){
+    public ResponseEntity<ProductDto> getById(@PathVariable Integer id){
 
         ProductDto product=productService.getById(id);
         if (product!=null)
@@ -53,7 +53,7 @@ public class ProductsController
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
         productService.delete(id);
         return ResponseEntity.ok().build();
     }

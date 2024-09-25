@@ -12,9 +12,9 @@ public interface CategoryService {
 
     Category add(CreateCategoryDto product);
 
-    void delete(Long id);
+    void delete(Integer id);
 
-    CategoryDto getById(Long id);
+    CategoryDto getById(Integer id);
 
     CategoryDto update(CreateCategoryDto dto);
 

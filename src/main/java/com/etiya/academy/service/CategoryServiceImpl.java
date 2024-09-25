@@ -28,8 +28,6 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public Category add(CreateCategoryDto category) {
-
-
         if(category.getName().length() < 3)
             throw new BusinessException("Kategori ismi 3 haneden kısa olamaz.");
 
@@ -41,22 +39,20 @@ public class CategoryServiceImpl implements CategoryService{
 
         Category category1 = CategoryMapper.INSTANCE.categoryFromCreateDto(category);
         return categoryRepository.save(category1);
-
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
-    public CategoryDto getById(Long id) {
+    public CategoryDto getById(Integer id) {
         return CategoryMapper.INSTANCE.dtoFromCategory(categoryRepository.getById(id));
     }
 
     @Override
     public CategoryDto update(CreateCategoryDto dto) {
-
         if(dto.getName().length() < 3)
             throw new BusinessException("Kategori ismi 3 haneden kısa olamaz.");
 

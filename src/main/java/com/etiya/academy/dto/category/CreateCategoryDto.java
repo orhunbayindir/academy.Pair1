@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCategoryDto {
-
     @NotBlank
     private String name;
 }

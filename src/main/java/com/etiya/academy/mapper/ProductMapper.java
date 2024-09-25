@@ -21,6 +21,7 @@ public interface ProductMapper
     Product productFromCreateDto(CreateProductDto dto);
     ListProductDto listDtoFromProduct(Product product);
     ProductDto dtoFromProduct(Product product);
+    @Mapping(source="category", target = "category.id")
     Product productFromUpdateDto(UpdateProductDto dto);
 
 

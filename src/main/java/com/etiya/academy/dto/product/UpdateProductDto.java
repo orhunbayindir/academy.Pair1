@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,9 +23,13 @@ public class UpdateProductDto
 
     @NotNull
     @Positive
-    private double unitPrice;
+    private BigDecimal unitPrice;
 
     @NotNull
     @PositiveOrZero
     private int unitsInStock;
+
+    @NotNull
+    @PositiveOrZero
+    private Long category;
 }
