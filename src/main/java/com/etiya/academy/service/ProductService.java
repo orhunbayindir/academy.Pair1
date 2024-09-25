@@ -7,6 +7,7 @@ import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService
 {
@@ -16,8 +17,10 @@ public interface ProductService
 
     void delete(Integer id);
 
-    ProductDto update(UpdateProductDto dto);
+    ProductDto update(Integer id, UpdateProductDto dto);
 
     ProductDto getById(Integer id);
+
+    Optional<Product> findById(Integer id);
 
 }

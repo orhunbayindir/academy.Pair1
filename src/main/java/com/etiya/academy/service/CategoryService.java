@@ -16,6 +16,6 @@ public interface CategoryService {
 
     CategoryDto getById(Integer id);
 
-    CategoryDto update(CreateCategoryDto dto);
+    CategoryDto update(Integer id, CreateCategoryDto dto);
 
 }
