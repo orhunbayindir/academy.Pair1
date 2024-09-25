@@ -6,6 +6,7 @@ import com.etiya.academy.dto.product.ProductDto;
 import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Product;
 import com.etiya.academy.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ProductsController
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody CreateProductDto product)
+    public ResponseEntity<Void> add(@RequestBody @Valid CreateProductDto product)
     {
         Product product1= productService.add(product);
         if (product1!=null)
@@ -41,11 +42,8 @@ public class ProductsController
 
     }
 
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getById(@PathVariable Integer id){
-
+    @GetMapping("id")
+    public ResponseEntity<ProductDto> getById(@RequestParam Integer id){
         ProductDto product=productService.getById(id);
         if (product!=null)
             return ResponseEntity.ok(product);
@@ -58,20 +56,12 @@ public class ProductsController
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping()
-    public ResponseEntity<ProductDto> update(@RequestBody UpdateProductDto dto){
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> update(@PathVariable Integer id, @RequestBody @Valid UpdateProductDto dto){
 
-        ProductDto product1=productService.update(dto);
+        ProductDto product1=productService.update(id, dto);
 
         return ResponseEntity.status(200).body(product1);
     }
-
-
-
-
-
-
-
-
 
 }

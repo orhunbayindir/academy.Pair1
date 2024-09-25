@@ -8,6 +8,7 @@ import com.etiya.academy.dto.product.ProductDto;
 import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Category;
 import com.etiya.academy.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class CategoriesController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody CreateCategoryDto category)
+    public ResponseEntity<Void> add(@RequestBody @Valid CreateCategoryDto category)
     {
         Category category1= categoryService.add(category);
         if (category1!=null)
@@ -36,9 +37,8 @@ public class CategoriesController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getById(@PathVariable Integer id){
-
+    @GetMapping("id")
+    public ResponseEntity<CategoryDto> getById(@RequestParam Integer id){
         CategoryDto category=categoryService.getById(id);
         if (category!=null)
             return ResponseEntity.ok(category);
@@ -51,14 +51,11 @@ public class CategoriesController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping()
-    public ResponseEntity<CategoryDto> update(@RequestBody CreateCategoryDto dto){
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDto> update(@PathVariable Integer id, @RequestBody @Valid CreateCategoryDto dto){
 
-        CategoryDto category1=categoryService.update(dto);
+        CategoryDto category1=categoryService.update(id, dto);
 
         return ResponseEntity.status(200).body(category1);
     }
-
-
-
 }
