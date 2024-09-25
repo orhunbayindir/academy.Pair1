@@ -7,6 +7,7 @@ import com.etiya.academy.dto.product.ProductDto;
 import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Category;
 import com.etiya.academy.entity.Product;
+import com.etiya.academy.entity.User;
 import com.etiya.academy.mapper.ProductMapper;
 import com.etiya.academy.repository.ProductRepository;
 import com.etiya.academy.repository.CategoryRepository;
@@ -66,7 +67,11 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public ProductDto update(UpdateProductDto dto) {
+    public ProductDto update(Integer id, UpdateProductDto dto) {
+        Optional<Product> product = productRepository.findById(id);
+        if( product.isEmpty() ){
+            throw new BusinessException("Bu id'ye sahip Product yok.");
+        }
         if(dto.getName().length() < 3)
             throw new BusinessException("Ürün ismi 3 haneden kısa olamaz.");
 
@@ -76,12 +81,21 @@ public class ProductServiceImpl implements ProductService
         if(productWithSameName)
             throw new BusinessException("Böyle bir ürün zaten var.");
 
-        Product product = ProductMapper.INSTANCE.productFromUpdateDto(dto);
-        return ProductMapper.INSTANCE.dtoFromProduct(productRepository.save(product));
+        Product productToBeSaved = ProductMapper.INSTANCE.productFromUpdateDto(dto);
+        productToBeSaved.setId(product.get().getId());
+        return ProductMapper.INSTANCE.dtoFromProduct(productRepository.save(productToBeSaved));
     }
 
     @Override
     public ProductDto getById(Integer id) {
-        return ProductMapper.INSTANCE.dtoFromProduct(productRepository.getById(id));
+        Optional<Product> product = productRepository.findById(id);
+        if( product.isPresent() )
+            return ProductMapper.INSTANCE.dtoFromProduct(product.get());
+        return null;
+    }
+
+    @Override
+    public Optional<Product> findById(Integer id) {
+        return productRepository.findById(id);
     }
 }

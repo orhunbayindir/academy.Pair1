@@ -7,6 +7,7 @@ import com.etiya.academy.dto.product.ProductDto;
 import com.etiya.academy.dto.product.UpdateProductDto;
 import com.etiya.academy.entity.Category;
 import com.etiya.academy.entity.Product;
+import com.etiya.academy.entity.User;
 import com.etiya.academy.mapper.CategoryMapper;
 import com.etiya.academy.mapper.ProductMapper;
 import com.etiya.academy.repository.CategoryRepository;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
@@ -48,11 +51,18 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDto getById(Integer id) {
-        return CategoryMapper.INSTANCE.dtoFromCategory(categoryRepository.getById(id));
+        Optional<Category> category = categoryRepository.findById(id);
+        if( category.isPresent() )
+            return CategoryMapper.INSTANCE.dtoFromCategory(category.get());
+        return null;
     }
 
     @Override
-    public CategoryDto update(CreateCategoryDto dto) {
+    public CategoryDto update(Integer id, CreateCategoryDto dto) {
+        Optional<Category> category = categoryRepository.findById(id);
+        if( category.isEmpty() ){
+            throw new BusinessException("Bu id'ye sahip Category yok.");
+        }
         if(dto.getName().length() < 3)
             throw new BusinessException("Kategori ismi 3 haneden kısa olamaz.");
 
@@ -62,7 +72,8 @@ public class CategoryServiceImpl implements CategoryService{
         if(categoryWithSameName)
             throw new BusinessException("Böyle bir kategori zaten var.");
 
-        Category category = CategoryMapper.INSTANCE.categoryFromCreateDto(dto);
-        return CategoryMapper.INSTANCE.dtoFromCategory(categoryRepository.save(category));
+        Category categoryToBeSaved = CategoryMapper.INSTANCE.categoryFromCreateDto(dto);
+        categoryToBeSaved.setId(category.get().getId());
+        return CategoryMapper.INSTANCE.dtoFromCategory(categoryRepository.save(categoryToBeSaved));
     }
 }
